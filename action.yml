@@ -1,0 +1,70 @@
+name: 'constituicao.tech — Document Integrity Scanner'
+description: 'Scans documents in pull requests for prompt injection, forged signatures, and AI-generated content. Aligned to OWASP LLM Top 10, NIST AI 100-2e2025, MITRE ATLAS.'
+author: 'BeansTech'
+
+branding:
+  icon: 'shield'
+  color: 'blue'
+
+inputs:
+  scan-mode:
+    description: 'Which modules to run: injection, integridade, assinatura, all'
+    required: false
+    default: 'injection'
+  threshold:
+    description: 'Risk score threshold to fail the check (0-100)'
+    required: false
+    default: '30'
+  file-patterns:
+    description: 'Glob patterns for files to scan (comma-separated)'
+    required: false
+    default: '**/*.pdf,**/*.docx,**/*.txt,**/*.md'
+  fail-on-detection:
+    description: 'Whether to fail the workflow on detection above threshold'
+    required: false
+    default: 'true'
+
+outputs:
+  score:
+    description: 'Highest risk score found across all scanned files'
+  level:
+    description: 'Risk level: baixo, atencao, elevado'
+  files-scanned:
+    description: 'Number of files scanned'
+  detections:
+    description: 'Number of files with score above threshold'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+        cache-dependency-path: ${{ github.action_path }}/detector-py/requirements.txt
+
+    - name: Install dependencies
+      shell: bash
+      run: pip install -r ${{ github.action_path }}/detector-py/requirements.txt
+
+    - name: Scan documents
+      id: scan
+      shell: bash
+      env:
+        SCAN_MODE: ${{ inputs.scan-mode }}
+        THRESHOLD: ${{ inputs.threshold }}
+        FILE_PATTERNS: ${{ inputs.file-patterns }}
+        FAIL_ON_DETECTION: ${{ inputs.fail-on-detection }}
+      run: python ${{ github.action_path }}/action/scan.py
+
+    - name: Post summary
+      if: always()
+      shell: bash
+      run: |
+        echo "### constituicao.tech — Scan Results" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- Files scanned: ${{ steps.scan.outputs.files-scanned }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Highest score: ${{ steps.scan.outputs.score }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Level: ${{ steps.scan.outputs.level }}" >> $GITHUB_STEP_SUMMARY
+        echo "- Detections above threshold: ${{ steps.scan.outputs.detections }}" >> $GITHUB_STEP_SUMMARY

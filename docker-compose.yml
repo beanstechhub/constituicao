@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  detector:
+    build: ./detector-py
+    ports:
+      - "8000:8000"
+    environment:
+      CONSTITUICAO_MAX_BYTES: "10485760"
+      CONSTITUICAO_MAX_CHARS: "500000"
+
+  api:
+    build: ./api-go
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      DETECTOR_URL: "http://detector:8000"
+      ALLOWED_ORIGINS: "http://localhost:3000,https://constituicao.tech"
+      AMBIENTE: "dev"
+      IP_HASH_SALT: "dev-salt-trocar-em-prod"
+    depends_on:
+      - detector
+
+  web:
+    image: nginx:alpine
+    ports:
+      - "3000:80"
+    volumes:
+      - ./web:/usr/share/nginx/html:ro
