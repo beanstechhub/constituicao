@@ -179,12 +179,12 @@ PADROES: list[Padrao] = [
         severidade=Severidade.ALTA,
         regex=re.compile(
             r"(?i)\b(ignor[ae]|desconsider[ae]|esque[çc]a|desprez[ae]|"
-            r"despreze|abandone|descarte|sobrescreva)\s+"
-            r"(as\s+|todas\s+as\s+|qualquer\s+|toda\s+)?"
+            r"despreze|abandone|descarte|sobrescreva|ignora)\s+"
+            r"(as\s+|todas\s+as\s+|qualquer\s+|toda\s+|las\s+)?"
             r"(instru[çc][õo]es|orienta[çc][õo]es|comandos|regras|diretrizes|"
-            r"restri[çc][õo]es)\s+"
+            r"restri[çc][õo]es|instrucciones)\s*"
             r"(anteriores|acima|previas|pr[ée]vias|do\s+sistema|originais|"
-            r"que\s+(?:voc[êe]\s+)?recebeu)"
+            r"que\s+(?:voc[êe]\s+)?recebeu|anteriores)?"
         ),
         descricao="Tentativa explícita de sobrescrever instruções do sistema de IA.",
         confianca_base=0.95,
@@ -239,9 +239,9 @@ PADROES: list[Padrao] = [
         severidade=Severidade.MEDIA,
         regex=re.compile(
             r"(?i)(?:nota|instru[çc][ãa]o|aviso|n\.b\.)\s+"
-            r"(?:para|[àa]|to)\s+"
-            r"(?:a\s+|the\s+)?(?:ia|intelig[êe]ncia\s+artificial|llm|gpt|claude|"
-            r"assistente|sistema\s+autom[áa]tico|modelo\s+de\s+linguagem|"
+            r"(?:para|[àa]|ao|to)\s+"
+            r"(?:o\s+|a\s+|the\s+)?(?:ia|intelig[êe]ncia\s+artificial|llm|gpt|claude|"
+            r"assistente|sistema|modelo\s+de\s+linguagem|"
             r"ai\s+assistant|language\s+model)"
         ),
         descricao="Texto explicitamente endereçado a uma IA dentro do documento.",
@@ -254,10 +254,12 @@ PADROES: list[Padrao] = [
         regex=re.compile(
             r"(?i)(?:ao\s+(?:processar|analisar|ler|resumir)\s+est[ae]\s+"
             r"(?:documento|peti[çc][ãa]o|texto|arquivo|conte[úu]do)|"
-            r"se\s+voc[êe]\s+(?:for|[ée])\s+(?:uma\s+)?(?:ia|llm|modelo)|"
+            r"se\s+voc[êe]\s+(?:for|[ée])\s+(?:uma?\s+)?(?:ia|llm|modelo|"
+            r"intelig[êe]ncia|sistema|machine|language\s+model)|"
+            r"if\s+you\s+are\s+a\s+(?:language\s+model|ai|llm)|"
             r"when\s+(?:processing|reading|analyzing)\s+this\s+(?:document|text|file))"
-            r".{0,80}?(?:conclua|decida|determine|julgue|recomende|aprove|"
-            r"defira|condene|conclude|decide|recommend|approve)"
+            r".{0,120}?(?:conclua|decida|determine|julgue|recomende|aprove|"
+            r"defira|condene|classifique|prioriz|conclude|decide|recommend|approve|classify)"
         ),
         descricao="Instrução condicional dirigida a sistema de IA para enviesar análise.",
         confianca_base=0.94,
@@ -294,10 +296,12 @@ PADROES: list[Padrao] = [
         categoria=Categoria.JAILBREAK_CONHECIDO,
         severidade=Severidade.ALTA,
         regex=re.compile(
-            r"(?i)\b(DAN\s+mode|do\s+anything\s+now|modo\s+desenvolvedor|"
-            r"developer\s+mode\s+enabled|jailbreak|DUDE\s+mode|"
-            r"STAN\s+mode|evil\s+confidant|opposite\s+mode|"
-            r"AIM\s+mode|maximum\s+mode)\b"
+            r"(?i)\b(DAN\b|do\s+anything\s+now|modo\s+desenvolvedor|"
+            r"developer\s+mode|jailbreak|DUDE\b|"
+            r"STAN\b|evil\s+confidant|opposite\s+mode|"
+            r"AIM\s+mode|maximum\s+mode|"
+            r"you\s+are\s+now\s+(?:DAN|DUDE|STAN)|"
+            r"no\s+(?:ethical|moral)\s+guidelines)"
         ),
         descricao="Padrão de jailbreak publicamente documentado em corpus de pesquisa.",
         confianca_base=0.93,
@@ -306,8 +310,8 @@ PADROES: list[Padrao] = [
         id="EST-001",
         categoria=Categoria.PAYLOAD_CODIFICADO,
         severidade=Severidade.MEDIA,
-        regex=re.compile(r"[A-Za-z0-9+/]{300,}={0,2}"),
-        descricao="Bloco extenso de aparente base64 — pode codificar payload de instrução.",
+        regex=re.compile(r"[A-Za-z0-9+/]{30,}={0,2}"),
+        descricao="Bloco de aparente base64 — pode codificar payload de instrução.",
         confianca_base=0.55,
     ),
     Padrao(
@@ -324,8 +328,8 @@ PADROES: list[Padrao] = [
         severidade=Severidade.BAIXA,
         regex=re.compile(
             r"(?i)(?:concatene|junte|combine|una)\s+"
-            r"(?:as\s+)?(?:partes|peda[çc]os|fragmentos|strings)\s+"
-            r"(?:abaixo|a\s+seguir|seguintes)"
+            r"(?:as\s+|os\s+)?(?:partes?|peda[çc]os|fragmentos|strings|textos|"
+            r"[A-Z]\s*\+\s*[A-Z]|[A-Z]\s*e\s*[A-Z])"
         ),
         descricao="Instrução para a IA concatenar fragmentos — vetor de payload splitting.",
         confianca_base=0.75,
