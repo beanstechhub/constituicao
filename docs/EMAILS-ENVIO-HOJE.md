@@ -21,7 +21,7 @@ Numbers: 4 modules, 34 tests, <1s latency, OWASP LLM01 aligned, Apache 2.0.
 
 This isn't wrapper code — it's defensive infrastructure across Python, Go, NLP, cryptography, and real-time fraud detection. One model, four security domains. Every commit attributes Claude.
 
-Repo: https://github.com/beanstechhub/constituicao
+Repo: https://github.com/beanstechhub/constituicao (org beanstechhub)
 
 Is there a "Powered by Claude" showcase for defensive AI projects? I have a 100-example ebook on judicial prompt injection ready for co-publishing if there's interest.
 
@@ -55,7 +55,7 @@ I deployed **constituicao.tech** entirely on GCP — an open-source AI integrity
 Stack: Cloud Run (us-central1), Cloud Build, Artifact Registry, Google-managed SSL. 4 modules, 34 tests, zero external APIs.
 
 Live: https://constituicao.tech
-Repo: https://github.com/beanstechhub/constituicao
+Repo: https://github.com/beanstechhub/constituicao (org beanstechhub)
 
 If there's a customer story, case study, or startup highlight for alumni building public-safety tools on GCP, I'd be glad to participate.
 
@@ -77,7 +77,7 @@ I built a GitHub Action that scans PR documents for prompt injection before they
 - Addresses OWASP LLM01:2025
 - Configurable threshold + scan modes
 - Apache 2.0, zero dependencies
-- Repo: https://github.com/beanstechhub/constituicao
+- Repo: https://github.com/beanstechhub/constituicao (org beanstechhub)
 
 The broader platform (constituicao.tech) also detects AI-generated text, forged signatures, and financial fraud — all runnable as a GitHub Action in CI/CD.
 
@@ -109,7 +109,7 @@ Sou Matheus Beans, fundador da BeansTech (alumni Google for Startups). Desenvolv
 - Complementa Resolução CNJ 332/2020 com camada técnica
 
 **Demonstração funcional:** https://constituicao.tech
-**Repositório:** https://github.com/beanstechhub/constituicao
+**Repositório:** https://github.com/beanstechhub/constituicao (org beanstechhub)
 
 **Proposta:** Apresentação técnica para equipe do Sinapses/PJe (15 min, remota). Disponibilização gratuita como middleware de pré-processamento.
 

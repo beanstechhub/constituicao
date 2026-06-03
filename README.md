@@ -3,8 +3,9 @@
 > Integridade de documentos profissionais na era da IA generativa. Fundamentada na eficácia horizontal dos direitos fundamentais.
 
 [![Licença](https://img.shields.io/badge/licen%C3%A7a-Apache--2.0-blue)](LICENSE)
-[![Versão](https://img.shields.io/badge/vers%C3%A3o-0.2.0-orange)](#)
-[![Status](https://img.shields.io/badge/status-revis%C3%A3o%20p%C3%BAblica-yellow)](#)
+[![Versão](https://img.shields.io/badge/vers%C3%A3o-0.2.1-orange)](#)
+[![Live](https://img.shields.io/badge/live-constituicao.tech-brightgreen)](https://constituicao.tech)
+[![Built with Claude](https://img.shields.io/badge/built%20with-Claude%20Opus-blueviolet)](https://anthropic.com)
 [![Frameworks](https://img.shields.io/badge/alinhado-OWASP%20%7C%20NIST%20%7C%20MITRE-green)](#)
 
 ## Fundamento constitucional
@@ -40,6 +41,18 @@ Mas faltava uma ferramenta que traduzisse esses frameworks para o profissional b
 - Publica os **padrões de detecção** sob licença aberta, sujeitos a revisão e contribuição.
 - Documenta a **calibração de severidade** e os critérios de classificação de risco.
 - Comunica transparentemente a **taxa estimada de falso positivo (3-7%)**.
+
+## Os 4 Módulos
+
+| # | Módulo | Protege | Latência |
+|---|--------|---------|----------|
+| 1 | **Prompt Injection** | Documentos processados por LLMs (11 categorias OWASP) | <1s |
+| 2 | **Integridade Acadêmica** | Autenticidade autoral via estilometria (10 features) | <200ms |
+| 3 | **Assinatura Digital** | Autenticidade criptográfica de PDFs (3 camadas) | <500ms |
+| 4 | **Fraud Shield** | Fraude financeira em tempo real (12 regras Go) | <100μs |
+
+**Live:** https://constituicao.tech
+**Validação (Colab):** [Notebook com 34 testes + benchmarks](https://colab.research.google.com/github/beanstechhub/constituicao/blob/main/colab_validation.ipynb)
 
 ## O que esta iniciativa NÃO faz
 
@@ -142,4 +155,4 @@ Não é a única defesa necessária. Mas é uma que faltava, e que a Constituiç
 
 ---
 
-**constituicao.tech** · Iniciativa independente · Contato: oi@constituicao.tech
+**constituicao.tech** · Beans Tech · Apache 2.0 · Built with Claude (Anthropic)
