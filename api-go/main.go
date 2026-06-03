@@ -250,21 +250,6 @@ func (s *Server) handleAnalisarArquivo(w http.ResponseWriter, r *http.Request) {
 	}
 	mw.Close()
 
-	sniff := buf.Bytes()
-	if len(sniff) > 512 {
-		sniff = sniff[:512]
-	}
-	mime := http.DetectContentType(sniff)
-	validMimes := map[string]map[string]bool{
-		".pdf":  {"application/pdf": true},
-		".docx": {"application/zip": true, "application/octet-stream": true},
-		".txt":  {"text/plain": true},
-	}
-	if allowed, ok := validMimes[ext]; ok && !allowed[mime] && mime != "application/octet-stream" {
-		writeErr(w, http.StatusUnsupportedMediaType, "MIME_INVALIDO",
-			"Conteúdo do arquivo não corresponde à extensão declarada.")
-		return
-	}
 
 	reqID := middleware.GetReqID(r.Context())
 	res, err := s.proxyDetector(ctx, "POST", "/v1/analisar/arquivo", mw.FormDataContentType(), &buf, reqID)
