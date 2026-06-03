@@ -26,7 +26,7 @@ from detector.extracao import extrair
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("constituicao-detector")
 
-MAX_BYTES = int(os.environ.get("CONSTITUICAO_MAX_BYTES", 10 * 1024 * 1024))
+MAX_BYTES = int(os.environ.get("CONSTITUICAO_MAX_BYTES", 50 * 1024 * 1024))
 MAX_CHARS = int(os.environ.get("CONSTITUICAO_MAX_CHARS", 500_000))
 
 

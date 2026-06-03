@@ -62,9 +62,9 @@ func loadConfig() Config {
 	return Config{
 		Port:            envOr("PORT", "8080"),
 		DetectorURL:     envOr("DETECTOR_URL", "http://localhost:8000"),
-		MaxBytes:        10 * 1024 * 1024,
+		MaxBytes:        50 * 1024 * 1024,
 		MaxTextChars:    500_000,
-		FreeAnalisesDia: 20,
+		FreeAnalisesDia: 100,
 		AllowedOrigins:  strings.Split(envOr("ALLOWED_ORIGINS", "https://constituicao.tech"), ","),
 		Ambiente:        envOr("AMBIENTE", "prod"),
 	}
