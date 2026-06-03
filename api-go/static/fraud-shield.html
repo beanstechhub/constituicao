@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fraud Shield — constituicao.tech</title>
+<meta name="description" content="Engine de detecção de fraude em tempo real. 12 regras, <100μs, Go puro. Detecta lavagem, structuring, smurfing e ataques coordenados." />
+<meta name="theme-color" content="#0f172a" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f172a; --navy-light: #1e293b; --surface: #f8fafc;
+    --emerald: #059669; --amber: #d97706; --carmim: #dc2626;
+    --text: #0f172a; --text-muted: #64748b; --text-on-dark: #e2e8f0;
+    --border: #e2e8f0; --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter Tight', system-ui, sans-serif; background: var(--navy); color: var(--text-on-dark); line-height: 1.7; }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--emerald); }
+
+  .hero { padding: 80px 0 48px; text-align: center; }
+  .hero h1 { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 700; margin-bottom: 12px; }
+  .hero .sub { color: var(--text-muted); font-size: 18px; max-width: 600px; margin: 0 auto; }
+  .hero .stats { display: flex; justify-content: center; gap: 32px; margin-top: 32px; }
+  .hero .stat { text-align: center; }
+  .hero .stat-num { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; color: var(--emerald); }
+  .hero .stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .content { background: var(--surface); color: var(--text); padding: 64px 0; }
+  .content h2 { font-family: 'Fraunces', serif; font-size: 28px; margin-bottom: 16px; margin-top: 48px; }
+  .content h2:first-child { margin-top: 0; }
+  .content h3 { font-size: 18px; margin-top: 32px; margin-bottom: 8px; color: var(--navy); }
+  .content p { margin-bottom: 16px; color: #334155; }
+
+  .rule-table { width: 100%; border-collapse: collapse; margin: 16px 0 32px; font-size: 14px; }
+  .rule-table th { background: var(--navy); color: white; padding: 10px 14px; text-align: left; font-weight: 500; }
+  .rule-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .rule-table tr:hover td { background: #f1f5f9; }
+  .rule-table .decision { font-weight: 600; font-size: 11px; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
+  .decision-review { background: #fef3c7; color: #92400e; }
+  .decision-block { background: #fee2e2; color: #991b1b; }
+
+  .diagram { background: var(--navy-light); color: var(--text-on-dark); padding: 24px; border-radius: var(--radius); font-family: 'JetBrains Mono', monospace; font-size: 13px; margin: 24px 0; white-space: pre; overflow-x: auto; }
+
+  .example { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin: 16px 0; }
+  .example-title { font-weight: 600; margin-bottom: 8px; }
+  .example-code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: #f8fafc; padding: 12px; border-radius: 6px; margin-top: 12px; overflow-x: auto; }
+  .example-result { margin-top: 12px; font-size: 13px; }
+  .example-result .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-right: 6px; }
+  .tag-allow { background: #d1fae5; color: #065f46; }
+  .tag-review { background: #fef3c7; color: #92400e; }
+  .tag-block { background: #fee2e2; color: #991b1b; }
+
+  .back-link { display: inline-block; margin-top: 48px; padding: 12px 24px; background: var(--emerald); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; }
+  .back-link:hover { opacity: 0.9; }
+
+  footer { padding: 32px 0; text-align: center; font-size: 13px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="container">
+    <h1>Fraud Shield</h1>
+    <p class="sub">Engine de detecção de fraude financeira em tempo real. Protege transações contra lavagem, structuring, smurfing e ataques coordenados.</p>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">12</div><div class="stat-label">Regras</div></div>
+      <div class="stat"><div class="stat-num">&lt;100μs</div><div class="stat-label">Latência</div></div>
+      <div class="stat"><div class="stat-num">0</div><div class="stat-label">Dependências</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container">
+
+    <h2>Como funciona</h2>
+    <p>O Fraud Shield avalia cada transação em tempo real usando sliding windows (janelas deslizantes) que rastreiam frequência e volume por usuário. Não depende de IA nem de APIs externas — é 100% determinístico e explicável.</p>
+
+    <div class="diagram">Transação → VelocityCounter → 12 Regras → Scoring → Decisão
+                ↓                              ↑
+        Sliding Windows                   ML Score (opcional)
+        (in-memory)                      via interface Scorer</div>
+
+    <h3>O que é uma Sliding Window?</h3>
+    <p>Uma janela temporal que "desliza" com o tempo. Exemplo: "quantas transações este usuário fez na última 1 hora?" A janela sempre olha para trás a partir do momento atual, descartando dados antigos automaticamente.</p>
+
+    <h3>Decisões</h3>
+    <p>Cada transação recebe uma de três decisões:</p>
+    <ul style="margin-bottom:16px; padding-left:20px;">
+      <li><strong>Allow</strong> — transação normal, sem indicadores de fraude</li>
+      <li><strong>Review</strong> — padrão suspeito, requer análise humana antes de liberar</li>
+      <li><strong>Block</strong> — padrão fortemente indicativo de fraude, transação retida</li>
+    </ul>
+
+    <h2>As 6 Regras Globais</h2>
+    <p>Aplicáveis a qualquer tipo de transação financeira.</p>
+
+    <table class="rule-table">
+      <tr><th>Regra</th><th>O que detecta</th><th>Threshold</th><th>Decisão</th></tr>
+      <tr><td><strong>high_single_amount</strong></td><td>Valor unitário elevado</td><td>&gt;R$10k → med, &gt;R$50k → high</td><td><span class="decision decision-review">Review</span></td></tr>
+      <tr><td><strong>velocity_count_1h</strong></td><td>Muitas transações em 1 hora</td><td>&gt;5 → med, &gt;10 → high, &gt;20 → crit</td><td><span class="decision decision-block">Block</span></td></tr>
+      <tr><td><strong>velocity_amount_24h</strong></td><td>Volume financeiro diário elevado</td><td>&gt;R$100k → high, &gt;R$200k → crit</td><td><span class="decision decision-block">Block</span></td></tr>
+      <tr><td><strong>unusual_hour</strong></td><td>Transação noturna + valor alto</td><td>0-6h + &gt;R$5k</td><td><span class="decision decision-review">Review</span></td></tr>
+      <tr><td><strong>new_destination_high</strong></td><td>Novo destino + valor expressivo</td><td>1ª vez + &gt;R$2k</td><td><span class="decision decision-review">Review</span></td></tr>
+      <tr><td><strong>rapid_fire</strong></td><td>Burst de transações em curto período</td><td>&gt;3 em 2min → high, &gt;5 → crit</td><td><span class="decision decision-block">Block</span></td></tr>
+    </table>
+
+    <h2>As 6 Regras de Betting (Anti-Lavagem)</h2>
+    <p>Específicas para plataformas de apostas e fintechs. Alinhadas à Circular BACEN 3.978/2020 e padrões COAF.</p>
+
+    <table class="rule-table">
+      <tr><th>Regra</th><th>Padrão COAF/BACEN</th><th>Decisão</th></tr>
+      <tr><td><strong>betting_round_trip</strong></td><td>Depósito + saque ≥80% em 24h sem atividade (lavagem clássica)</td><td><span class="decision decision-block">Block</span></td></tr>
+      <tr><td><strong>betting_smurfing</strong></td><td>&gt;3 contas no mesmo IP em 1h (contas-laranja)</td><td><span class="decision decision-review">Review</span></td></tr>
+      <tr><td><strong>betting_structuring</strong></td><td>Soma &gt;R$45k em ≥3 transações (fracionamento para evadir COAF)</td><td><span class="decision decision-review">Review</span></td></tr>
+      <tr><td><strong>betting_syndicate</strong></td><td>&gt;5 saques no mesmo merchant em 10min (saque coordenado)</td><td><span class="decision decision-block">Block</span></td></tr>
+      <tr><td><strong>merchant_velocity</strong></td><td>Volume &gt;150% do máximo/hora configurado</td><td><span class="decision decision-review">Review</span></td></tr>
+      <tr><td><strong>betting_ticket_deviation</strong></td><td>Média 24h &gt;3× média 30d (desvio súbito de perfil)</td><td><span class="decision decision-review">Review</span></td></tr>
+    </table>
+
+    <h2>Scoring</h2>
+    <p>O score final combina as regras disparadas com um peso opcional de modelo ML:</p>
+    <div class="diagram">score = rule_score × (1 - ml_weight) + ml_score × 10 × ml_weight
+
+Decisão:
+  score ≥ 8.0 ou risk = critical → Block
+  score ≥ 4.0 ou risk = high    → Review
+  caso contrário                 → Allow</div>
+    <p>Sem modelo ML configurado (<code>ml_weight = 0</code>), o sistema opera 100% baseado em regras — determinístico e auditável.</p>
+
+    <h2>Exemplos Práticos</h2>
+
+    <div class="example">
+      <div class="example-title">Transação normal (PIX R$500)</div>
+      <div class="example-code">POST /v1/fraude/avaliar
+{"user_id": "usr_123", "type": "pix_out", "amount": 50000, "currency": "BRL"}</div>
+      <div class="example-result">
+        <span class="tag tag-allow">ALLOW</span> score: 0.0 · risk: low · nenhuma regra disparada
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-title">Valor elevado (PIX R$55.000)</div>
+      <div class="example-code">POST /v1/fraude/avaliar
+{"user_id": "usr_123", "type": "pix_out", "amount": 5500000, "currency": "BRL"}</div>
+      <div class="example-result">
+        <span class="tag tag-review">REVIEW</span> score: 4.5 · risk: high · regra: high_single_amount
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-title">Round-trip (lavagem: depósito + saque imediato)</div>
+      <div class="example-code">// Depósito de R$10.000
+{"user_id": "usr_456", "type": "pix_in", "amount": 1000000}
+// 2h depois: saque de R$9.500 (95% do depósito)
+{"user_id": "usr_456", "type": "withdrawal", "amount": 950000}</div>
+      <div class="example-result">
+        <span class="tag tag-block">BLOCK</span> score: 8.5 · risk: critical · regra: betting_round_trip
+      </div>
+    </div>
+
+    <h2>Integração</h2>
+    <p>O Fraud Shield é uma biblioteca Go pura (zero dependências externas). Pode ser integrado:</p>
+    <ul style="padding-left:20px; margin-bottom:16px;">
+      <li><strong>Via API REST</strong> — endpoint <code>/v1/fraude/avaliar</code> no gateway</li>
+      <li><strong>Como biblioteca Go</strong> — importar <code>github.com/beanstechhub/constituicao/fraud-shield</code></li>
+      <li><strong>Extensível</strong> — interfaces <code>Scorer</code> (ML), <code>Persister</code> (banco), <code>Rule</code> (regras customizadas)</li>
+    </ul>
+
+    <h2>Fundamento Constitucional</h2>
+    <p><strong>Art. 170, CF/88</strong> — A ordem econômica, fundada na valorização do trabalho humano e na livre iniciativa, tem por fim assegurar a todos existência digna. A proteção contra fraude financeira é condição para uma economia saudável.</p>
+    <p>Alinhado à <strong>Circular BACEN 3.978/2020</strong> (prevenção à lavagem) e padrões <strong>COAF</strong> de reporte.</p>
+
+    <a href="/" class="back-link">← Voltar ao constituicao.tech</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">constituicao.tech · Beans Tech · Apache 2.0 · Built with Claude</div>
+</footer>
+
+</body>
+</html>

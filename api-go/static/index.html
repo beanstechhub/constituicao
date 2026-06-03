@@ -39,7 +39,7 @@
   "author": {
     "@type": "Organization",
     "name": "Beans Tech",
-    "url": "https://github.com/beanstechbr"
+    "url": "https://github.com/beanstechhub"
   },
   "offers": {
     "@type": "Offer",
@@ -920,7 +920,7 @@
       <a href="#artigos">Artigos</a>
       <a href="#analisar">Analisar</a>
       <a href="#principios">Princípios</a>
-      <a href="https://github.com/beanstechbr/constituicao-tech">GitHub</a>
+      <a href="https://github.com/beanstechhub/constituicao">GitHub</a>
     </nav>
   </div>
 </header>
@@ -1020,7 +1020,6 @@
       <button class="module-tab ativo" data-module="injection">Prompt Injection</button>
       <button class="module-tab" data-module="integridade">Integridade</button>
       <button class="module-tab" data-module="assinatura">Assinatura</button>
-      <button class="module-tab" data-module="fraude">Fraud Shield</button>
     </div>
 
     <div id="painel-injection" class="modulo-painel">
@@ -1070,41 +1069,6 @@
       </label>
     </div>
 
-    <div id="painel-fraude" class="modulo-painel" style="display:none">
-      <div class="exemplos-bar">
-        <span class="exemplos-label">Exemplos:</span>
-        <button class="exemplo-btn" onclick="loadExemplo('fraud',0)">PIX alto valor</button>
-        <button class="exemplo-btn" onclick="loadExemplo('fraud',1)">Structuring COAF</button>
-      </div>
-      <div class="form-grid">
-        <div class="form-field">
-          <label class="form-label">User ID</label>
-          <input type="text" id="fraude-user" class="form-input" placeholder="usr_12345" />
-        </div>
-        <div class="form-field">
-          <label class="form-label">Tipo</label>
-          <select id="fraude-type" class="form-input">
-            <option value="pix_out">PIX — Envio</option>
-            <option value="pix_in">PIX — Recebimento</option>
-            <option value="withdrawal">Saque</option>
-            <option value="swap">Swap</option>
-            <option value="crypto_buy">Crypto — Compra</option>
-          </select>
-        </div>
-        <div class="form-field span-2">
-          <label class="form-label">Valor (centavos)</label>
-          <input type="number" id="fraude-amount" class="form-input" placeholder="500000 = R$ 5.000,00" />
-        </div>
-        <div class="form-field">
-          <label class="form-label">Destino (opcional)</label>
-          <input type="text" id="fraude-dest" class="form-input" placeholder="dest_abc" />
-        </div>
-        <div class="form-field">
-          <label class="form-label">IP (opcional)</label>
-          <input type="text" id="fraude-ip" class="form-input" placeholder="192.168.1.1" />
-        </div>
-      </div>
-    </div>
 
     <div class="acoes">
       <span class="info-uso">
@@ -1126,6 +1090,23 @@
         </div>
       </div>
       <div id="achados"></div>
+    </div>
+
+    <div class="legenda-siglas" style="margin-top:24px; padding:20px; background:var(--surface-warm); border-radius:10px; font-size:12px; color:var(--text-muted); line-height:1.8;">
+      <strong style="color:var(--text); font-size:13px;">O que significa cada categoria:</strong><br>
+      <strong>INJ-001</strong> injection_instrucao — Override de instruções do sistema ("ignore", "desconsidere")<br>
+      <strong>INJ-002</strong> injection_papel — Redefinição de identidade ("aja como", "você agora é")<br>
+      <strong>INJ-003</strong> injection_exfiltracao — Extração de system prompt ("repita suas instruções")<br>
+      <strong>IND-001</strong> manipulacao_decisao — Nota dirigida à IA ("IA: considere favorável")<br>
+      <strong>IND-002</strong> injection_indireta — Instrução condicional ("se você for um modelo...")<br>
+      <strong>EST-001</strong> esteganografia — Caracteres invisíveis (zero-width, homóglifos)<br>
+      <strong>OFS-001</strong> ofuscacao — Homóglifos, leetspeak, codificação<br>
+      <strong>EST-002</strong> payload_codificado — Bloco base64 extenso (payload oculto)<br>
+      <strong>DEL-001</strong> delimitador_suspeito — Tokens de controle (ChatML, Llama [INST])<br>
+      <strong>JBK-001</strong> jailbreak_conhecido — Padrões DAN, DUDE, STAN<br>
+      <strong>FRG-001</strong> payload_fragmentado — Concatenação instruída ("junte as partes")<br>
+      <br>
+      <span style="font-size:11px;">Alinhado a: OWASP LLM Top 10 (2025) · NIST AI 100-2e2025 · MITRE ATLAS AML.T0051</span>
     </div>
   </div>
 </section>
@@ -1197,7 +1178,7 @@
     <h2>IA saudável começa com transparência.</h2>
     <p>constituição.tech é uma iniciativa aberta. Contribua, audite, questione. O código e a metodologia pertencem a todos.</p>
     <div class="cta-links">
-      <a href="https://github.com/beanstechbr/constituicao-tech" class="cta-btn primary">
+      <a href="https://github.com/beanstechhub/constituicao" class="cta-btn primary">
         <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
         Ver no GitHub
       </a>
@@ -1215,7 +1196,7 @@
     <nav>
       <a href="#artigos">Artigos</a>
       <a href="#principios">Princípios</a>
-      <a href="https://github.com/beanstechbr/constituicao-tech">GitHub</a>
+      <a href="https://github.com/beanstechhub/constituicao">GitHub</a>
       <a href="/privacy.html">Privacidade</a>
       <a href="/terms.html">Termos</a>
     </nav>
