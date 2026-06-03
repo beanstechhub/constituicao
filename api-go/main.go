@@ -17,11 +17,13 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
+	"embed"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
+	"io/fs"
 	"log/slog"
 	"mime/multipart"
 	"net/http"
@@ -36,6 +38,9 @@ import (
 	"github.com/go-chi/cors"
 	"github.com/go-chi/httprate"
 )
+
+//go:embed static/*
+var staticFiles embed.FS
 
 const versao = "0.2.1"
 
@@ -451,7 +456,11 @@ func securityHeaders(next http.Handler) http.Handler {
 		h.Set("Referrer-Policy", "strict-origin-when-cross-origin")
 		h.Set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload")
 		h.Set("Permissions-Policy", "geolocation=(), microphone=(), camera=()")
-		h.Set("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'")
+		if strings.HasPrefix(r.URL.Path, "/v1/") || r.URL.Path == "/health" {
+			h.Set("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'")
+		} else {
+			h.Set("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'")
+		}
 		next.ServeHTTP(w, r)
 	})
 }
@@ -522,6 +531,10 @@ func main() {
 		r.Post("/v1/assinatura/verificar", s.handleProxyMultipart("/v1/assinatura/verificar"))
 		r.Post("/v1/fraude/avaliar", s.handleFraudeAvaliar)
 	})
+
+	staticFS, _ := fs.Sub(staticFiles, "static")
+	fileServer := http.FileServer(http.FS(staticFS))
+	r.NotFound(fileServer.ServeHTTP)
 
 	srv := &http.Server{
 		Addr:              ":" + cfg.Port,

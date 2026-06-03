@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Política de Privacidade — constituicao.tech</title>
+<meta name="theme-color" content="#0f172a" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<style>
+  body { font-family: 'Inter Tight', system-ui, sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.7; padding: 48px 24px; max-width: 720px; margin: 0 auto; }
+  h1 { font-size: 28px; margin-bottom: 8px; }
+  h2 { font-size: 20px; margin-top: 32px; margin-bottom: 8px; color: #10b981; }
+  a { color: #10b981; }
+  .meta { color: #94a3b8; font-size: 14px; margin-bottom: 32px; }
+  p, li { margin-bottom: 12px; }
+  ul { padding-left: 20px; }
+</style>
+</head>
+<body>
+<h1>Política de Privacidade</h1>
+<p class="meta">Última atualização: 27 de maio de 2026</p>
+
+<h2>1. Dados que coletamos</h2>
+<p><strong>Nenhum dado pessoal é armazenado.</strong> O constituicao.tech opera de forma stateless:</p>
+<ul>
+  <li>Textos enviados para análise são processados em memória e descartados imediatamente após a resposta.</li>
+  <li>Arquivos (PDF, DOCX, TXT) são processados em memória e nunca persistidos em disco ou banco de dados.</li>
+  <li>Nenhum cookie é utilizado.</li>
+  <li>Nenhum rastreador (analytics, pixel, fingerprint) é empregado.</li>
+</ul>
+
+<h2>2. Endereço IP</h2>
+<p>Para fins de rate limiting (proteção contra abuso), o endereço IP do requisitante é convertido em hash irreversível (SHA-256 com salt). O IP original nunca é armazenado ou registrado em logs.</p>
+
+<h2>3. Logs</h2>
+<p>Os logs do sistema registram apenas:</p>
+<ul>
+  <li>Timestamp da requisição</li>
+  <li>Hash do IP (não reversível)</li>
+  <li>Tamanho do texto/arquivo (em caracteres/bytes)</li>
+  <li>Status HTTP da resposta</li>
+  <li>Request ID (UUID aleatório para suporte)</li>
+</ul>
+<p>O conteúdo do documento nunca aparece nos logs.</p>
+
+<h2>4. Compartilhamento</h2>
+<p>Não compartilhamos dados com terceiros. Não vendemos, transferimos ou divulgamos informações de uso.</p>
+
+<h2>5. Base legal (LGPD)</h2>
+<p>Por não armazenar dados pessoais, o tratamento se limita ao necessário para execução do serviço (Art. 7, V, LGPD). Não há formação de perfil, decisão automatizada sobre pessoas, ou transferência internacional de dados.</p>
+
+<h2>6. Seus direitos</h2>
+<p>Como não armazenamos dados pessoais identificáveis, não há dados para acessar, corrigir ou excluir. Se tiver dúvidas, entre em contato via GitHub Issues.</p>
+
+<h2>7. Segurança</h2>
+<ul>
+  <li>Comunicação via HTTPS (TLS 1.3)</li>
+  <li>Headers de segurança: HSTS, CSP, X-Frame-Options</li>
+  <li>Código aberto: auditável por qualquer pessoa</li>
+</ul>
+
+<h2>8. Contato</h2>
+<p>Dúvidas sobre privacidade: <a href="https://github.com/beanstechbr/constituicao-tech/issues">GitHub Issues</a></p>
+
+<p style="margin-top: 48px; color: #64748b; font-size: 13px;"><a href="/">Voltar ao constituicao.tech</a></p>
+</body>
+</html>
